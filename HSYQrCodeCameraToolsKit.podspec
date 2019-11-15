@@ -21,22 +21,26 @@ Pod::Spec.new do |s|
 TODO: Add long description of the pod here.
                        DESC
 
-  s.homepage         = 'https://github.com/317398895@qq.com/HSYQrCodeCameraToolsKit'
+  s.homepage         = 'https://github.com/huangsongyao/HSYQrCodeCameraToolsKit'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { '317398895@qq.com' => '317398895@qq.com' }
-  s.source           = { :git => 'https://github.com/317398895@qq.com/HSYQrCodeCameraToolsKit.git', :tag => s.version.to_s }
+  s.author           = { 'huangsongyao' => '317398895@qq.com' }
+  s.source           = { :git => 'https://github.com/huangsongyao/HSYQrCodeCameraToolsKit.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
   s.ios.deployment_target = '8.0'
 
-  s.source_files = 'HSYQrCodeCameraToolsKit/Classes/**/*'
+  s.source_files = 'HSYQrCodeCameraToolsKit/Classes/**/*.{h,m}'
   
-  # s.resource_bundles = {
-  #   'HSYQrCodeCameraToolsKit' => ['HSYQrCodeCameraToolsKit/Assets/*.png']
-  # }
+  s.resource_bundles = {
+    'HSYQrCodeCameraToolsKit' => ['HSYQrCodeCameraToolsKit/Assets/*.png']
+  }
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
   # s.dependency 'AFNetworking', '~> 2.3'
+  s.dependency 'HSYMacroKit'
+  s.dependency 'HSYMethodsToolsKit'
+  s.dependency 'Masonry'
+  
 end

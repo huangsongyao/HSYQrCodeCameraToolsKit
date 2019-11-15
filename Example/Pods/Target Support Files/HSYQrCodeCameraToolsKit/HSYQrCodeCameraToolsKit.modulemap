@@ -1,0 +1,6 @@
+framework module HSYQrCodeCameraToolsKit {
+  umbrella header "HSYQrCodeCameraToolsKit-umbrella.h"
+
+  export *
+  module * { export * }
+}

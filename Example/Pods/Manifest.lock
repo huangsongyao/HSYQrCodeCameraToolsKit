@@ -1,0 +1,67 @@
+PODS:
+  - FBSnapshotTestCase (2.1.4):
+    - FBSnapshotTestCase/SwiftSupport (= 2.1.4)
+  - FBSnapshotTestCase/Core (2.1.4)
+  - FBSnapshotTestCase/SwiftSupport (2.1.4):
+    - FBSnapshotTestCase/Core
+  - HSYMacroKit (0.1.4)
+  - HSYMethodsToolsKit (0.1.5):
+    - HSYMacroKit
+    - JSONModel
+    - Masonry
+    - ReactiveObjC
+    - SDWebImage
+  - HSYQrCodeCameraToolsKit (0.1.0):
+    - HSYMacroKit
+    - HSYMethodsToolsKit
+    - Masonry
+  - JSONModel (1.8.0)
+  - Masonry (1.1.0)
+  - ReactiveObjC (3.1.1)
+  - SDWebImage (5.3.1):
+    - SDWebImage/Core (= 5.3.1)
+  - SDWebImage/Core (5.3.1)
+
+DEPENDENCIES:
+  - FBSnapshotTestCase
+  - HSYMacroKit (from `https://github.com/huangsongyao/HSYMacroKit.git`)
+  - HSYMethodsToolsKit (from `https://github.com/huangsongyao/HSYMethodsToolsKit.git`)
+  - HSYQrCodeCameraToolsKit (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - FBSnapshotTestCase
+    - JSONModel
+    - Masonry
+    - ReactiveObjC
+    - SDWebImage
+
+EXTERNAL SOURCES:
+  HSYMacroKit:
+    :git: https://github.com/huangsongyao/HSYMacroKit.git
+  HSYMethodsToolsKit:
+    :git: https://github.com/huangsongyao/HSYMethodsToolsKit.git
+  HSYQrCodeCameraToolsKit:
+    :path: "../"
+
+CHECKOUT OPTIONS:
+  HSYMacroKit:
+    :commit: 16c2690a2f4315f0ddf1417bb11db33ffb36ac8b
+    :git: https://github.com/huangsongyao/HSYMacroKit.git
+  HSYMethodsToolsKit:
+    :commit: c77f2bc6ea94689311715ed35b26181365b2cf00
+    :git: https://github.com/huangsongyao/HSYMethodsToolsKit.git
+
+SPEC CHECKSUMS:
+  FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
+  HSYMacroKit: 382477fb48caa2919542868a73ccc473bb331997
+  HSYMethodsToolsKit: 5d56d00b8c9b6f59ec656f6cd05220160d63cdf2
+  HSYQrCodeCameraToolsKit: cd1628375e058104c782e87fe006d5c2c2a3e952
+  JSONModel: 02ab723958366a3fd27da57ea2af2113658762e9
+  Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
+  ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
+  SDWebImage: 7137d57385fb632129838c1e6ab9528a22c666cc
+
+PODFILE CHECKSUM: 8a8100402ce211952536dbbc3d5e677f41d7c21a
+
+COCOAPODS: 1.7.5

@@ -1,0 +1,6 @@
+framework module Pods_HSYQrCodeCameraToolsKit_Tests {
+  umbrella header "Pods-HSYQrCodeCameraToolsKit_Tests-umbrella.h"
+
+  export *
+  module * { export * }
+}

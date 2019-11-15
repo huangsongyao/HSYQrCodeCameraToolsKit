@@ -9,5 +9,8 @@ target 'HSYQrCodeCameraToolsKit_Example' do
     inherit! :search_paths
 
     pod 'FBSnapshotTestCase'
+    pod 'HSYMacroKit', :git=> 'https://github.com/huangsongyao/HSYMacroKit.git'
+    pod 'HSYMethodsToolsKit', :git=> 'https://github.com/huangsongyao/HSYMethodsToolsKit.git'
+    
   end
 end
