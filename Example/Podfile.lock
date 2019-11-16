@@ -5,7 +5,7 @@ PODS:
   - FBSnapshotTestCase/SwiftSupport (2.1.4):
     - FBSnapshotTestCase/Core
   - HSYMacroKit (0.1.4)
-  - HSYMethodsToolsKit (0.1.5):
+  - HSYMethodsToolsKit (0.1.6):
     - HSYMacroKit
     - JSONModel
     - Masonry
@@ -49,13 +49,13 @@ CHECKOUT OPTIONS:
     :commit: 16c2690a2f4315f0ddf1417bb11db33ffb36ac8b
     :git: https://github.com/huangsongyao/HSYMacroKit.git
   HSYMethodsToolsKit:
-    :commit: c77f2bc6ea94689311715ed35b26181365b2cf00
+    :commit: 6e62ebd45748bc01067f325d3e709317a28f9985
     :git: https://github.com/huangsongyao/HSYMethodsToolsKit.git
 
 SPEC CHECKSUMS:
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   HSYMacroKit: 382477fb48caa2919542868a73ccc473bb331997
-  HSYMethodsToolsKit: 5d56d00b8c9b6f59ec656f6cd05220160d63cdf2
+  HSYMethodsToolsKit: a62273be7eb39600f8b98c432ed401cf259e2533
   HSYQrCodeCameraToolsKit: cd1628375e058104c782e87fe006d5c2c2a3e952
   JSONModel: 02ab723958366a3fd27da57ea2af2113658762e9
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201

@@ -10,6 +10,8 @@
 #import <HSYMethodsToolsKit/NSBundle+PrivateFileResource.h>
 #import <Masonry/Masonry.h>
 #import <HSYMacroKit/HSYToolsMacro.h>
+#import <HSYMethodsToolsKit/UIView+Frame.h>
+#import <HSYMethodsToolsKit/UIAlertController+RACSignal.h>
 
 @interface HSYCustomQrCodeCameraViewController () {
     @private UIButton *_lightButton;
@@ -25,11 +27,31 @@
     // Do any additional setup after loading the view.
 }
 
+#pragma mark - Load
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    if (self.lightButton.selected) {
+        [self hsy_cameraDeviceConfiguration:YES];
+        self.lightButton.selected = !self.lightButton.selected;
+    }
+}
+
+#pragma mark - Lazy
+
 - (UIButton *)lightButton
 {
     if (!_lightButton) {
         NSDictionary *dictionary = @{@(YES) : @{@"打开手电筒" : @"open_light_icon"}, @(NO) : @{@"关闭手电筒" : @"close_light_icon"}};
+        @weakify(self);
         _lightButton = [UIButton hsy_buttonWithAction:^(UIButton * _Nonnull button) {
+            @strongify(self);
+            if ([self.hsy_captureDevice hasTorch]) {
+                [self hsy_cameraDeviceConfiguration:button.selected];
+            } else {
+                [[[UIAlertController hsy_showAlertController:self title:@"您的手机可能没有闪光灯设备" message:@"您的手机可能没有闪光灯设备，暂时无法提供手电筒功能，请检查后再试" alertActionTitles:@[@"知道了"]] deliverOn:[RACScheduler mainThreadScheduler ]] subscribeNext:^(UIAlertAction * _Nullable x) {}];
+            }
             button.selected = !button.selected;
         }];
         [_lightButton setImage:[NSBundle hsy_imageForBundle:[dictionary[@(NO)] allValues].firstObject] forState:UIControlStateNormal];
@@ -37,14 +59,22 @@
         [_lightButton setTitle:[dictionary[@(NO)] allKeys].firstObject forState:UIControlStateNormal];
         [_lightButton setTitle:[dictionary[@(YES)] allKeys].firstObject forState:UIControlStateSelected];
         [self.view addSubview:_lightButton];
-        [_lightButton mas_makeConstraints:^(MASConstraintMaker *make) {
-            make.bottom.equalTo(self.view.mas_bottom).offset(-(HSY_IS_iPhoneX ? 40.0 : 20.0));
-            make.size.mas_equalTo(CGSizeMake(IPHONE_WIDTH, 65.0f));
-            make.centerX.equalTo(self.view.mas_centerX);
-        }];
+        
+        [_lightButton hsy_setImagePosition:kHSYMethodsToolsButtonImagePositionBottom forSpacing:7.0f];
+        _lightButton.origin = CGPointMake((IPHONE_WIDTH - _lightButton.width)/2.0f, (IPHONE_HEIGHT - _lightButton.height - 40.0));
     }
     return _lightButton;
 }
 
+- (void)hsy_cameraDeviceConfiguration:(BOOL)closed
+{
+    NSError *error = nil;
+    BOOL lock = [self.hsy_captureDevice lockForConfiguration:&error];
+    if (lock) {
+        AVCaptureTorchMode torchMode = (closed ? AVCaptureTorchModeOff : AVCaptureTorchModeOn);
+        [self.hsy_captureDevice setTorchMode:torchMode];
+        [self.hsy_captureDevice unlockForConfiguration];
+    }
+}
 
 @end

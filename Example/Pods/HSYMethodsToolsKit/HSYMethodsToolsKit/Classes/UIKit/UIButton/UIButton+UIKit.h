@@ -9,6 +9,15 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+typedef NS_ENUM(NSUInteger, kHSYMethodsToolsButtonImagePosition) {
+    
+    kHSYMethodsToolsButtonImagePositionLeft,
+    kHSYMethodsToolsButtonImagePositionRight,
+    kHSYMethodsToolsButtonImagePositionTop,
+    kHSYMethodsToolsButtonImagePositionBottom,
+    
+};
+
 @interface UIButton (UIKit)
 
 /**
@@ -60,6 +69,14 @@ NS_ASSUME_NONNULL_BEGIN
  @param title title的富文本
  */
 - (void)hsy_setAttributedTitle:(NSAttributedString *)title;
+
+/**
+ 通过titleEdgeInsets和imageEdgeInsets来实现文字和图片的自由排列
+
+ @param position 图标锚点位置
+ @param spacing 图文间距
+ */
+- (void)hsy_setImagePosition:(kHSYMethodsToolsButtonImagePosition)position forSpacing:(CGFloat)spacing;
 
 @end
 
