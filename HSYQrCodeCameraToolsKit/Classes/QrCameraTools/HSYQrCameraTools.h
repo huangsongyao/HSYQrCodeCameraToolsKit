@@ -27,8 +27,16 @@ typedef void(^HSYQrCameraToolsDidOutputMetadataBlock)(HSYQrCodeCameraViewControl
 
  @param metadataBlock 二维码相机扫描结果后续操作的block回调事件
  */
-+ (void)hsy_presentQrCodeCamera:(HSYQrCameraToolsDidOutputMetadataBlock)metadataBlock;
-+ (void)hsy_presentQrCodeCustomCamera:(HSYQrCameraToolsDidOutputMetadataBlock)metadataBlock;
+
+
+/**
+ present格式的快速方法
+
+ @param metadataBlock 二维码相机扫描结果后续操作的block回调事件
+ @param title UINavigationController的title
+ */
++ (void)hsy_presentQrCodeCamera:(HSYQrCameraToolsDidOutputMetadataBlock)metadataBlock forCameraTitle:(nullable NSString *)title;
++ (void)hsy_presentQrCodeCustomCamera:(HSYQrCameraToolsDidOutputMetadataBlock)metadataBlock forCameraTitle:(nullable NSString *)title;
 
 @end
 

@@ -25,7 +25,7 @@
 //            NSLog(@"x.metadata => %@", metadataValue);
 //            NSLog(@"completed");
 //            [button hsy_setTitle:metadataValue];
-//        }];
+//        } forCameraTitle:@"test"];
         [HSYQrCameraTools hsy_pushQrCodeCustomCamera:^(HSYQrCodeCameraViewController * _Nonnull viewController, NSString * _Nonnull metadataValue) {
             NSLog(@"x.metadata => %@", metadataValue);
             NSLog(@"completed");
