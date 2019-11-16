@@ -11,7 +11,7 @@
 #import <HSYMethodsToolsKit/RACSignal+Convenients.h>
 #import "HSYQrCameraTools.h"
 
-@interface HSYViewController () <HSYQrCodeCameraViewControllerDelegate>
+@interface HSYViewController ()
 
 @end
 
@@ -21,37 +21,23 @@
 {
     [super viewDidLoad];
     UIButton *button = [UIButton hsy_buttonWithAction:^(UIButton * _Nonnull  button) {
-        //        HSYQrCodeCameraViewController *vc = [[HSYQrCodeCameraViewController alloc] init];
-        //        vc.qrDelegate = self;
-        //        UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
-        //        [self presentViewController:navigationController animated:YES completion:nil];
-        [HSYQrCameraTools  hsy_presentQrCodeCustomCamera:^(HSYQrCodeCameraViewController * _Nonnull viewController, NSString * _Nonnull metadataValue) {
+//        [HSYQrCameraTools hsy_presentQrCodeCustomCamera:^(HSYQrCodeCameraViewController * _Nonnull viewController, NSString * _Nonnull metadataValue) {
+//            NSLog(@"x.metadata => %@", metadataValue);
+//            NSLog(@"completed");
+//            [button hsy_setTitle:metadataValue];
+//        }];
+        [HSYQrCameraTools hsy_pushQrCodeCustomCamera:^(HSYQrCodeCameraViewController * _Nonnull viewController, NSString * _Nonnull metadataValue) {
             NSLog(@"x.metadata => %@", metadataValue);
             NSLog(@"completed");
             [button hsy_setTitle:metadataValue];
         }];
-        //        [HSYQrCameraTools hsy_presentQrCodeCamera:^(HSYQrCodeCameraViewController * _Nonnull viewController, NSString * _Nonnull metadataValue) {
-        //            NSLog(@"x.metadata => %@", metadataValue);
-        //            NSLog(@"completed");
-        //            [button hsy_setTitle:metadataValue];
-        //        }];
     }];
     [button hsy_setTitle:@"clicked me"];
-    button.backgroundColor = UIColor.greenColor;
+    button.backgroundColor = [UIColor.greenColor colorWithAlphaComponent:0.5];
     button.frame = self.view.bounds;
     [self.view addSubview:button];
     
     // Do any additional setup after loading the view, typically from a nib.
-}
-
-#pragma mark - HSYQrCodeCameraViewControllerDelegate
-
-- (void)hsy_qrCodeDidOutputMetadata:(RACSignal<RACTuple *> * _Nonnull (^)(RACTuple * _Nonnull))metadata
-{
-    [[metadata(RACTuplePack(@(YES), @(YES),  @(YES)))  deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(RACTuple * _Nullable x) {
-        NSLog(@"x.metadata => %@", x.first);
-        NSLog(@"completed");
-    }];
 }
 
 - (void)didReceiveMemoryWarning

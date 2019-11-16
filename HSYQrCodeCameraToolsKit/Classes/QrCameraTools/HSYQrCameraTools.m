@@ -16,7 +16,7 @@
 {
     HSYQrCodeCameraViewController *vc = [[HSYQrCodeCameraViewController alloc] init];
     [[vc.rac_qrCodeCamera deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(HSYQrCodeCameraDidOutputMetadataBlock  _Nullable x) {
-        [[x(RACTuplePack(@(YES), @(YES))) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(RACTuple * _Nullable tuple) {
+        [[x(RACTuplePack(@(YES), @(YES), @(YES))) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(RACTuple * _Nullable tuple) {
             if (metadataBlock) {
                 metadataBlock(tuple.second, tuple.first);
             }
@@ -29,7 +29,7 @@
 {
     HSYCustomQrCodeCameraViewController *vc = [[HSYCustomQrCodeCameraViewController alloc] init];
     [[vc.rac_qrCodeCamera deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(HSYQrCodeCameraDidOutputMetadataBlock  _Nullable x) {
-        [[x(RACTuplePack(@(YES), @(YES))) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(RACTuple * _Nullable tuple) {
+        [[x(RACTuplePack(@(YES), @(YES), @(YES))) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(RACTuple * _Nullable tuple) {
             if (metadataBlock) {
                 metadataBlock(tuple.second, tuple.first);
             }
