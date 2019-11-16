@@ -49,7 +49,7 @@ CHECKOUT OPTIONS:
     :commit: 16c2690a2f4315f0ddf1417bb11db33ffb36ac8b
     :git: https://github.com/huangsongyao/HSYMacroKit.git
   HSYMethodsToolsKit:
-    :commit: 6e62ebd45748bc01067f325d3e709317a28f9985
+    :commit: 3ffc061a1380a62266764dc6b044a9431206aa72
     :git: https://github.com/huangsongyao/HSYMethodsToolsKit.git
 
 SPEC CHECKSUMS:
