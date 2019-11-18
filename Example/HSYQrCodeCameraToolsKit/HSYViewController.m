@@ -34,7 +34,7 @@
                 stopCamera = !stopCamera;
                 backLast = !backLast;
                 @strongify(self);
-                [[UIAlertController hsy_showAlertController:self title:@"failure" message:qrString alertActionTitles:@[@"YES"]] hsy_performCompletedSignal];
+                [[[UIAlertController hsy_showAlertController:self.presentedViewController title:@"failure" message:qrString alertActionTitles:@[@"YES"]] deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(UIAlertAction * _Nullable x) {}];
             }
             return [RACSignal hsy_sendTupleSignal:RACTuplePack(@(stopCamera), @(backLast))];
         } forCameraTitle:@"test"];

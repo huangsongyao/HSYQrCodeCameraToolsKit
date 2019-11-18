@@ -66,7 +66,8 @@
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
     navigationController.navigationBar.topItem.title = (title.length ? title : HSYLOCALIZED(@"扫一扫"));
     @weakify(vc);
-    vc.navigationItem.rightBarButtonItems = [UINavigationBar hsy_titleNavigationItems:@[@{@{@(1212) : [UIFont systemFontOfSize:15]} : @{HSYLOCALIZED(@"相册") : HSY_RGB(51,51,51)}}] leftEdgeInsets:0.0 subscribeNext:^(UIButton * _Nonnull button, NSInteger tag) {
+    UIFont *font = [UIFont systemFontOfSize:15];
+    vc.navigationItem.rightBarButtonItems = [UINavigationBar hsy_titleNavigationItems:@[@{@{@(1212) : font} : @{HSYLOCALIZED(@"相册") : HSY_RGB(51,51,51)}}] leftEdgeInsets:0.0 subscribeNext:^(UIButton * _Nonnull button, NSInteger tag) {
         [[ZLPhotoActionSheet hsy_singleSelectedPhoto] subscribeNext:^(RACTuple * _Nullable x) {
             NSString *qrString = [CIDetector hsy_detectorQRImage:x.first];
             if (discern) {
@@ -77,6 +78,10 @@
                 }];
             }
         }];
+    }];
+    vc.navigationItem.leftBarButtonItems = [UINavigationBar hsy_titleNavigationItems:@[@{@{@(2121) : font} : @{HSYLOCALIZED(@"返回") : HSY_RGB(51,51,51)}}] leftEdgeInsets:0.0 subscribeNext:^(UIButton * _Nonnull button, NSInteger tag) {
+        @strongify(vc);
+        [vc hsy_disposeQrCamera:RACTuplePack(@(YES), @(YES))];
     }];
     [[vc.rac_qrCodeCamera deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(HSYQrCodeCameraDidOutputMetadataBlock  _Nullable x) {
         [[x(RACTuplePack(@(YES), @(YES))) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(RACTuple * _Nullable tuple) {
