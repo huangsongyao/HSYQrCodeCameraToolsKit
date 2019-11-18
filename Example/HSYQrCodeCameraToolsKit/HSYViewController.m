@@ -21,10 +21,12 @@
 {
     [super viewDidLoad];
     UIButton *button = [UIButton hsy_buttonWithAction:^(UIButton * _Nonnull  button) {
-        [HSYQrCameraTools hsy_presentQrCodeCustomCamera:^(HSYQrCodeCameraViewController * _Nonnull viewController, NSString * _Nonnull metadataValue) {
+        [HSYQrCameraTools hsy_presentQrCodeCustomCamera:^(HSYQrCodeCameraViewController * _Nonnull viewController, NSString * _Nonnull metadataValue) { 
             NSLog(@"x.metadata => %@", metadataValue);
             NSLog(@"completed");
             [button hsy_setTitle:metadataValue];
+        } discernQrCodeImage:^RACSignal<RACTuple *> * _Nonnull(NSString * _Nonnull qrString, BOOL isDiscernSuccess) {
+            return [RACSignal hsy_sendTupleSignal:RACTuplePack(@(YES), @(YES))];
         } forCameraTitle:@"test"];
 //        [HSYQrCameraTools hsy_pushQrCodeCustomCamera:^(HSYQrCodeCameraViewController * _Nonnull viewController, NSString * _Nonnull metadataValue) {
 //            NSLog(@"x.metadata => %@", metadataValue);

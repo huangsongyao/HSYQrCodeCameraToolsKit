@@ -237,22 +237,27 @@ NSString *const kHSYQrCodeCameraAnimationForKey  = @"HSYQrCodeCameraAnimationFor
         if (self.qrDelegate && [self.qrDelegate respondsToSelector:@selector(hsy_qrCodeDidOutputMetadata:)]) {
             [self.qrDelegate hsy_qrCodeDidOutputMetadata:^RACSignal<RACTuple *> * _Nonnull(RACTuple * _Nonnull tuple) {
                 @strongify(self);
-                if ([tuple.first boolValue]) {
-                    [self hsy_stop];
-                    NSLog(@"QR Code Camera => Stop Work");
-                }
-                if ([tuple.second boolValue]) {
-                    BOOL backType = [tuple.third boolValue];
-                    if (backType) {
-                        [self.navigationController popViewControllerAnimated:YES];
-                    } else {
-                        [self dismissViewControllerAnimated:YES completion:nil];
-                    }
-                    NSLog(@"QR Code Camera => Back Last");
-                }
+                [self hsy_disposeQrCamera:tuple];
                 return [RACSignal hsy_sendTupleSignal:RACTuplePack(metadataObject.stringValue, self)];
             }];
         }
+    }
+}
+
+- (void)hsy_disposeQrCamera:(RACTuple *)tuple
+{
+    if ([tuple.first boolValue]) {
+        [self hsy_stop];
+        NSLog(@"QR Code Camera => Stop Work");
+    }
+    if ([tuple.second boolValue]) {
+        BOOL backType = [tuple.third boolValue];
+        if (backType) {
+            [self.navigationController popViewControllerAnimated:YES];
+        } else {
+            [self dismissViewControllerAnimated:YES completion:nil];
+        }
+        NSLog(@"QR Code Camera => Back Last");
     }
 }
 

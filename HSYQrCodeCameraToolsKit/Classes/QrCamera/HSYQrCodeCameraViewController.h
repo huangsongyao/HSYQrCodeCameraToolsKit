@@ -40,6 +40,8 @@ typedef RACSignal<RACTuple *> *_Nonnull(^HSYQrCodeCameraDidOutputMetadataBlock)(
 - (void)hsy_start;
 //停止结束 => 扫描+扫描动画
 - (void)hsy_stop;
+//入参说明：这个RACTuple元组的first表示立即停止二维码相机的工作，second表示立即执行pop返回上一页，third表示second的执行类型，只有当second.boolValue == YES时才有效[YES -> pop, NO -> dismiss]
+- (void)hsy_disposeQrCamera:(RACTuple *)tuple;
 
 #pragma mark - Load
 
