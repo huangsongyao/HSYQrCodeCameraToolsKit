@@ -42,5 +42,6 @@ TODO: Add long description of the pod here.
   s.dependency 'HSYMacroKit'
   s.dependency 'HSYMethodsToolsKit'
   s.dependency 'Masonry'
+  s.dependency 'ZLPhotoBrowser'
   
 end

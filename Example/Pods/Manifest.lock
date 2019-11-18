@@ -15,12 +15,15 @@ PODS:
     - HSYMacroKit
     - HSYMethodsToolsKit
     - Masonry
+    - ZLPhotoBrowser
   - JSONModel (1.8.0)
   - Masonry (1.1.0)
   - ReactiveObjC (3.1.1)
   - SDWebImage (5.3.1):
     - SDWebImage/Core (= 5.3.1)
   - SDWebImage/Core (5.3.1)
+  - ZLPhotoBrowser (3.1.2):
+    - SDWebImage
 
 DEPENDENCIES:
   - FBSnapshotTestCase
@@ -35,6 +38,7 @@ SPEC REPOS:
     - Masonry
     - ReactiveObjC
     - SDWebImage
+    - ZLPhotoBrowser
 
 EXTERNAL SOURCES:
   HSYMacroKit:
@@ -56,11 +60,12 @@ SPEC CHECKSUMS:
   FBSnapshotTestCase: 094f9f314decbabe373b87cc339bea235a63e07a
   HSYMacroKit: 382477fb48caa2919542868a73ccc473bb331997
   HSYMethodsToolsKit: a62273be7eb39600f8b98c432ed401cf259e2533
-  HSYQrCodeCameraToolsKit: cd1628375e058104c782e87fe006d5c2c2a3e952
+  HSYQrCodeCameraToolsKit: fb0a21aee066394248c2ab2a0be94c5203329141
   JSONModel: 02ab723958366a3fd27da57ea2af2113658762e9
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
   ReactiveObjC: 011caa393aa0383245f2dcf9bf02e86b80b36040
   SDWebImage: 7137d57385fb632129838c1e6ab9528a22c666cc
+  ZLPhotoBrowser: 7e88434918366af98f8ebbaf5b94206985812ed6
 
 PODFILE CHECKSUM: 8a8100402ce211952536dbbc3d5e677f41d7c21a
 

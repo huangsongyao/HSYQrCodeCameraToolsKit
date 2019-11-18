@@ -6,28 +6,29 @@
 //
 
 #import "HSYQrCameraTools.h"
-#import <HSYMethodsToolsKit/UIViewController+Controller.h>
+#import <HSYMethodsToolsKit/UIViewController+Controller.h> 
 #import <HSYMacroKit/HSYToolsMacro.h>
 #import "HSYCustomQrCodeCameraViewController.h"
+#import "ZLPhotoActionSheet+RACSignal.h"
+#import <HSYMethodsToolsKit/UINavigationBar+NavigationItem.h>
+#import <HSYMethodsToolsKit/CIDetector+QRImage.h>
 
 @implementation HSYQrCameraTools
 
 + (void)hsy_pushQrCodeCamera:(HSYQrCameraToolsDidOutputMetadataBlock)metadataBlock
 {
-    HSYQrCodeCameraViewController *vc = [[HSYQrCodeCameraViewController alloc] init];
-    [[vc.rac_qrCodeCamera deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(HSYQrCodeCameraDidOutputMetadataBlock  _Nullable x) {
-        [[x(RACTuplePack(@(YES), @(YES), @(YES))) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(RACTuple * _Nullable tuple) {
-            if (metadataBlock) {
-                metadataBlock(tuple.second, tuple.first);
-            }
-        }];
-    }];
-    [UIViewController.hsy_currentViewController.navigationController pushViewController:vc animated:YES];
+    [self.class hsy_pushQrCodeCamera:metadataBlock isCustomCamera:NO];
 }
 
 + (void)hsy_pushQrCodeCustomCamera:(HSYQrCameraToolsDidOutputMetadataBlock)metadataBlock
 {
-    HSYCustomQrCodeCameraViewController *vc = [[HSYCustomQrCodeCameraViewController alloc] init];
+    [self.class hsy_pushQrCodeCamera:metadataBlock isCustomCamera:YES];
+}
+
++ (void)hsy_pushQrCodeCamera:(HSYQrCameraToolsDidOutputMetadataBlock)metadataBlock isCustomCamera:(BOOL)isCustom
+{
+    HSYQrCodeCameraViewController *vc = [[NSClassFromString(@{@(YES) : NSStringFromClass([HSYCustomQrCodeCameraViewController class]),
+                                                              @(NO) : NSStringFromClass([HSYQrCodeCameraViewController class])}[@(isCustom)]) alloc] init];
     [[vc.rac_qrCodeCamera deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(HSYQrCodeCameraDidOutputMetadataBlock  _Nullable x) {
         [[x(RACTuplePack(@(YES), @(YES), @(YES))) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(RACTuple * _Nullable tuple) {
             if (metadataBlock) {
@@ -40,24 +41,26 @@
 
 + (void)hsy_presentQrCodeCamera:(HSYQrCameraToolsDidOutputMetadataBlock)metadataBlock forCameraTitle:(nullable NSString *)title
 {
-    HSYQrCodeCameraViewController *vc = [[HSYQrCodeCameraViewController alloc] init];
-    UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
-    navigationController.navigationBar.topItem.title = (title.length ? title : HSYLOCALIZED(@"扫一扫"));
-    [[vc.rac_qrCodeCamera deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(HSYQrCodeCameraDidOutputMetadataBlock  _Nullable x) {
-        [[x(RACTuplePack(@(YES), @(YES))) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(RACTuple * _Nullable tuple) {
-            if (metadataBlock) {
-                metadataBlock(tuple.second, tuple.first);
-            }
-        }];
-    }];
-    [UIViewController.hsy_currentViewController presentViewController:navigationController animated:YES completion:nil];
+    [self.class hsy_presentQrCodeCamera:metadataBlock forCameraTitle:title isCustomCamera:NO];
 }
 
 + (void)hsy_presentQrCodeCustomCamera:(HSYQrCameraToolsDidOutputMetadataBlock)metadataBlock forCameraTitle:(nullable NSString *)title
 {
-    HSYCustomQrCodeCameraViewController *vc = [[HSYCustomQrCodeCameraViewController alloc] init];
+    [self.class hsy_presentQrCodeCamera:metadataBlock forCameraTitle:title isCustomCamera:YES];
+}
+
++ (void)hsy_presentQrCodeCamera:(HSYQrCameraToolsDidOutputMetadataBlock)metadataBlock forCameraTitle:(nullable NSString *)title isCustomCamera:(BOOL)isCustom
+{
+    HSYQrCodeCameraViewController *vc = [[NSClassFromString(@{@(YES) : NSStringFromClass([HSYCustomQrCodeCameraViewController class]),
+                                                              @(NO) : NSStringFromClass([HSYQrCodeCameraViewController class])}[@(isCustom)]) alloc] init];
     UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:vc];
     navigationController.navigationBar.topItem.title = (title.length ? title : HSYLOCALIZED(@"扫一扫"));
+    navigationController.navigationItem.rightBarButtonItems = [UINavigationBar hsy_titleNavigationItems:@[@{@{@(1212) : [UIFont systemFontOfSize:15]} : @{HSYLOCALIZED(@"相册") : HSY_RGB(51,51,51)}}] leftEdgeInsets:0.0 subscribeNext:^(UIButton * _Nonnull button, NSInteger tag) {
+        [[ZLPhotoActionSheet hsy_singleSelectedPhoto] subscribeNext:^(RACTuple * _Nullable x) {
+            NSString *qrString = [CIDetector hsy_detectorQRImage:x.first];
+            NSLog(@"qrString => %@", qrString);
+        }];
+    }];
     [[vc.rac_qrCodeCamera deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(HSYQrCodeCameraDidOutputMetadataBlock  _Nullable x) {
         [[x(RACTuplePack(@(YES), @(YES))) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(RACTuple * _Nullable tuple) {
             if (metadataBlock) {

@@ -249,7 +249,7 @@
 				ORGANIZATIONNAME = "317398895@qq.com";
 				TargetAttributes = {
 					6003F589195388D20070C39A = {
-						DevelopmentTeam = 3Q8KZAP3M5;
+						DevelopmentTeam = MXEAV3WBEM;
 					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
@@ -383,6 +383,7 @@
 				"${BUILT_PRODUCTS_DIR}/Masonry/Masonry.framework",
 				"${BUILT_PRODUCTS_DIR}/ReactiveObjC/ReactiveObjC.framework",
 				"${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework",
+				"${BUILT_PRODUCTS_DIR}/ZLPhotoBrowser/ZLPhotoBrowser.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
@@ -392,6 +393,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Masonry.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ReactiveObjC.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SDWebImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ZLPhotoBrowser.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -563,7 +565,7 @@
 			baseConfigurationReference = 31FCE1A4D666EAF357FE4F3E /* Pods-HSYQrCodeCameraToolsKit_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 3Q8KZAP3M5;
+				DEVELOPMENT_TEAM = MXEAV3WBEM;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HSYQrCodeCameraToolsKit/HSYQrCodeCameraToolsKit-Prefix.pch";
 				INFOPLIST_FILE = "HSYQrCodeCameraToolsKit/HSYQrCodeCameraToolsKit-Info.plist";
@@ -580,7 +582,7 @@
 			baseConfigurationReference = 35EE74E7C62C4004752449B2 /* Pods-HSYQrCodeCameraToolsKit_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 3Q8KZAP3M5;
+				DEVELOPMENT_TEAM = MXEAV3WBEM;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "HSYQrCodeCameraToolsKit/HSYQrCodeCameraToolsKit-Prefix.pch";
 				INFOPLIST_FILE = "HSYQrCodeCameraToolsKit/HSYQrCodeCameraToolsKit-Info.plist";
