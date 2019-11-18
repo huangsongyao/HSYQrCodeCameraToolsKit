@@ -7,6 +7,7 @@
 
 #import "ZLPhotoActionSheet+RACSignal.h"
 #import <HSYMethodsToolsKit/RACSignal+Convenients.h>
+#import <HSYMethodsToolsKit/UIViewController+Controller.h>
 
 static ZLPhotoActionSheet *zlPhotoActionSheet = nil;
 
@@ -35,7 +36,7 @@ static ZLPhotoActionSheet *zlPhotoActionSheet = nil;
         zlPhoto.cancleBlock = ^{
             [subscriber sendCompleted];
         };
-        [zlPhoto showPhotoLibrary];
+        [zlPhoto showPhotoLibraryWithSender:UIViewController.hsy_currentViewController];
     }];
 }
 
