@@ -8,6 +8,7 @@
 
 #import "HSYViewController.h"
 #import <HSYMethodsToolsKit/UIButton+UIKit.h>
+#import <HSYMethodsToolsKit/UIAlertController+RACSignal.h>
 #import <HSYMethodsToolsKit/RACSignal+Convenients.h>
 #import "HSYQrCameraTools.h"
 
@@ -21,6 +22,7 @@
 {
     [super viewDidLoad];
     UIButton *button = [UIButton hsy_buttonWithAction:^(UIButton * _Nonnull  button) {
+        @weakify(self);
         [HSYQrCameraTools hsy_presentQrCodeCustomCamera:^(HSYQrCodeCameraViewController * _Nonnull viewController, NSString * _Nonnull metadataValue) { 
             NSLog(@"x.metadata => %@", metadataValue);
             NSLog(@"completed");
@@ -31,6 +33,8 @@
             if (!isDiscernSuccess) {
                 stopCamera = !stopCamera;
                 backLast = !backLast;
+                @strongify(self);
+                [[UIAlertController hsy_showAlertController:self title:@"failure" message:qrString alertActionTitles:@[@"YES"]] hsy_performCompletedSignal];
             }
             return [RACSignal hsy_sendTupleSignal:RACTuplePack(@(stopCamera), @(backLast))];
         } forCameraTitle:@"test"];
