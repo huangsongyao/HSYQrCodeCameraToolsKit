@@ -15,6 +15,7 @@
 #import "UIImage+QrCamera.h"
 #import "UIViewController+QrCamera.h"
 #import "UIViewController+SystemSources.h"
+#import "ZLPhotoActionSheet+RACSignal.h"
 #import "HSYCustomQrCodeCameraViewController.h"
 #import "HSYQrCodeCameraViewController.h"
 #import "HSYQrCameraTools.h"
