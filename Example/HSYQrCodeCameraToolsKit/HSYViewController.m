@@ -26,7 +26,13 @@
             NSLog(@"completed");
             [button hsy_setTitle:metadataValue];
         } discernQrCodeImage:^RACSignal<RACTuple *> * _Nonnull(NSString * _Nonnull qrString, BOOL isDiscernSuccess) {
-            return [RACSignal hsy_sendTupleSignal:RACTuplePack(@(YES), @(YES))];
+            BOOL stopCamera = YES;
+            BOOL backLast = YES;
+            if (!isDiscernSuccess) {
+                stopCamera = !stopCamera;
+                backLast = !backLast;
+            }
+            return [RACSignal hsy_sendTupleSignal:RACTuplePack(@(stopCamera), @(backLast))];
         } forCameraTitle:@"test"];
 //        [HSYQrCameraTools hsy_pushQrCodeCustomCamera:^(HSYQrCodeCameraViewController * _Nonnull viewController, NSString * _Nonnull metadataValue) {
 //            NSLog(@"x.metadata => %@", metadataValue);

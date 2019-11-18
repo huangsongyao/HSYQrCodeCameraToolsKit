@@ -70,7 +70,8 @@
         [[ZLPhotoActionSheet hsy_singleSelectedPhoto] subscribeNext:^(RACTuple * _Nullable x) {
             NSString *qrString = [CIDetector hsy_detectorQRImage:x.first];
             if (discern) {
-                [[discern(qrString, ![qrString isEqualToString:@"not features!"]) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(RACTuple * _Nullable x) {
+                BOOL discerned = (![qrString isEqualToString:@"not features!"]);
+                [[discern(qrString, discerned) deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(RACTuple * _Nullable x) {
                     @strongify(vc);
                     [vc hsy_disposeQrCamera:x];
                 }];
