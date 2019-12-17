@@ -18,6 +18,7 @@ typedef NS_ENUM(NSUInteger, kHSYMethodsToolsButtonImagePosition) {
     
 };
 
+@class RACSignal;
 @interface UIButton (UIKit)
 
 /**
@@ -27,6 +28,14 @@ typedef NS_ENUM(NSUInteger, kHSYMethodsToolsButtonImagePosition) {
  @return UIButton
  */
 + (instancetype)hsy_buttonWithAction:(void(^)(UIButton *button))action;
+
+/**
+ 快速创建，点击后阻断，通过RACSignal信号返回一个completed信号，来还原按钮的阻断状态
+
+ @param action action方法，通过RACSignal信号返回一个completed信号，来还原按钮的阻断状态
+ @return UIButton
+ */
++ (instancetype)hsy_buttonWithEnabledAction:(RACSignal *(^)(UIButton *button))action;
 
 /**
  设置title

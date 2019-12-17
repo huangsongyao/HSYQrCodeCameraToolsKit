@@ -77,11 +77,26 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Performs
 
 /**
- 让RACSignal的信号立即执行
+ 让RACSignal的信号对象立即执行completed完成信号
 
  @return RACDisposable *
  */
 - (RACDisposable *)hsy_performCompletedSignal;
+
+/**
+ 创建一个RACSignal对象，并立即执行completed完成信号
+
+ @return RACSignal
+ */
++ (RACSignal *)hsy_sendCompletedSignal;
+
+/**
+ 创建一个RACSignal对象，延迟delays时间执行completed完成信号
+
+ @param delays 延迟执行的时间
+ @return RACSignal
+ */
++ (RACSignal *)hsy_sendCompletedSignal:(NSTimeInterval)delays;
 
 /**
  对RACSubscriber协议对象增加sendNext:之后执行sendCompleted

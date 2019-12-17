@@ -58,5 +58,17 @@ static NSString *kHSYMethodsToolsRegularShouldChangeCharactersForKey      = @"HS
     return YES;
 }
 
+#pragma mark - Will Text
+
++ (NSString *)hsy_shouldChangedCharcters:(UITextField *)textField inRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *result = [textField.text stringByReplacingCharactersInRange:range withString:string];
+    return result;
+}
+
+- (NSString *)hsy_shouldChangedCharcters:(NSRange)range replacementString:(NSString *)string
+{
+    return [UITextField hsy_shouldChangedCharcters:self inRange:range replacementString:string];
+}
 
 @end

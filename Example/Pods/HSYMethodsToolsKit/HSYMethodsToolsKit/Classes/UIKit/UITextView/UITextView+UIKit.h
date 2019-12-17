@@ -30,6 +30,25 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (instancetype)hsy_textViewWithRegular:(NSString *)regular;
 
+/**
+ 在"- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text"方法中根据获取到的old-text和当前输入的range以及输入的内容string，拼接成下一步的text内容
+
+ @param textView UITextView
+ @param range range
+ @param string string
+ @return self.text的内容
+ */
++ (NSString *)hsy_shouldChangedCharcters:(UITextView *)textView inRange:(NSRange)range replacementString:(NSString *)string;
+
+/**
+ 在"- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text"方法中根据获取到的old-text和当前输入的range以及输入的内容string，拼接成下一步的text内容
+
+ @param range range
+ @param string string
+ @return self.text的内容
+ */
+- (NSString *)hsy_shouldChangedCharcters:(NSRange)range replacementString:(NSString *)string;
+
 @end
 
 NS_ASSUME_NONNULL_END

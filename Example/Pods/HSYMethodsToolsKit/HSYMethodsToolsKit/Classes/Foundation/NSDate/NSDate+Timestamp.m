@@ -78,7 +78,7 @@ kHSYMethodsToolsKitDateFormater const DateFormater_HHmm                 = @"HH:m
     if ([NSString stringWithFormat:@"%@", @(realTimestamp)].length > 11) {
         realTimestamp = realTimestamp/1000;
     }
-    return [NSDate dateWithTimeIntervalSince1970:timestamp];
+    return [NSDate dateWithTimeIntervalSince1970:realTimestamp];
 }
 
 + (NSString *)hsy_toDateString:(NSTimeInterval)timestamp dataFormatterString:(kHSYMethodsToolsKitDateFormater)dataFormatter

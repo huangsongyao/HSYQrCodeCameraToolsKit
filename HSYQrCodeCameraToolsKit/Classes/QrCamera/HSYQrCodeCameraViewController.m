@@ -13,6 +13,7 @@
 #import "UIViewController+SystemSources.h"
 #import <HSYMethodsToolsKit/UIAlertController+RACSignal.h>
 #import <HSYMethodsToolsKit/UIApplication+AppDelegates.h>
+#import <HSYMethodsToolsKit/UIApplication+OpenURL.h>
 #import "CAAnimation+QrCamera.h"
 #import <HSYMethodsToolsKit/NSBundle+PrivateFileResource.h>
 
@@ -70,7 +71,7 @@ NSString *const kHSYQrCodeCameraAnimationForKey  = @"HSYQrCodeCameraAnimationFor
     } else {
         [[[UIAlertController hsy_showAlertController:self title:@"您尚未授权摄像头的使用权限" message:@"由于您当前尚未授权您的设备的摄像头使用权限，需要您在系统的 “设置-隐私-相机” 中授权此应用访问您设备的摄像头权限" alertActionTitles:@[@"取消", @"去授权"]] deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(UIAlertAction * _Nullable x) {
             if (x.hsy_actionIndex.integerValue) {
-                [[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+                [UIApplication hsy_openSystemSetting];
             }
         }];
     }

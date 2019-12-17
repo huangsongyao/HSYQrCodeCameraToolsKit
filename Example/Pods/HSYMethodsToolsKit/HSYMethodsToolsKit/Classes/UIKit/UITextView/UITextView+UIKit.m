@@ -58,4 +58,18 @@ static NSString *kHSYMethodsToolsRegularCharactersForKey      = @"HSYMethodsTool
     return YES;
 }
 
+#pragma mark - Will Text
+
++ (NSString *)hsy_shouldChangedCharcters:(UITextView *)textView inRange:(NSRange)range replacementString:(NSString *)string
+{
+    NSString *result = [textView.text stringByReplacingCharactersInRange:range withString:string];
+    return result;
+}
+
+- (NSString *)hsy_shouldChangedCharcters:(NSRange)range replacementString:(NSString *)string
+{
+    return [UITextView hsy_shouldChangedCharcters:self inRange:range replacementString:string];
+}
+
+
 @end

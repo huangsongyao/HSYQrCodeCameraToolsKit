@@ -7,6 +7,34 @@
 
 #import "UIScrollView+Pages.h"
 #import "UIView+Frame.h"
+#import "NSObject+Property.h"
+
+static NSString *kHSYMethodsToolsPrivateSubviewsForKey = @"HSYMethodsToolsPrivateSubviewsForKey";
+
+@interface UIScrollView (Private)
+
+@property (nonatomic, strong) NSMutableArray<UIView *> *hsy_subviews;
+
+@end
+
+@implementation UIScrollView (Private)
+
+- (NSMutableArray<UIView *> *)hsy_subviews
+{
+    NSMutableArray<UIView *> *thisSubviews = [self hsy_getPropertyForKey:kHSYMethodsToolsPrivateSubviewsForKey];
+    if (!thisSubviews) {
+        thisSubviews = [[NSMutableArray alloc] init];
+        [self setHsy_subviews:thisSubviews];
+    }
+    return thisSubviews;
+}
+
+- (void)setHsy_subviews:(NSMutableArray<UIView *> *)hsy_subviews
+{
+    [self hsy_setProperty:hsy_subviews forKey:kHSYMethodsToolsPrivateSubviewsForKey objcAssociationPolicy:kHSYMethodsToolsKitObjcAssociationPolicyNonatomicStrong];
+}
+
+@end
 
 @implementation UIScrollView (Pages)
 
@@ -120,5 +148,21 @@
     return (point.y > 0.0f ? kHSYCocoaKitScrollDirectionToUp : kHSYCocoaKitScrollDirectionToDown);
 }
 
+- (UIView *)hsy_topPageView
+{
+    NSArray *subviews = (self.hsy_subviews.count > 0 ? self.hsy_subviews : self.subviews);
+    NSInteger currentPage = MAX(self.hsy_currentPage, 0);
+    currentPage = MIN(currentPage, (subviews.count - 1));
+    return self.subviews[currentPage];
+}
+
+- (void)hsy_addSubview:(UIView *)subview
+{
+    if (!self.hsy_subviews) {
+        self.hsy_subviews = [[NSMutableArray alloc] init];
+    }
+    [self.hsy_subviews addObject:subview];
+    [self addSubview:subview];
+}
 
 @end

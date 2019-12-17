@@ -9,18 +9,31 @@
 #import "ReactiveObjC.h"
 #import "NSString+StringSize.h"
 #import "UIView+Frame.h"
+#import "RACSignal+Convenients.h"
 
 @implementation UIButton (UIKit)
 
 + (instancetype)hsy_buttonWithAction:(void(^)(UIButton *button))action
 {
+    return [UIButton hsy_buttonWithEnabledAction:^RACSignal *(UIButton *button) {
+        if (action) {
+            action(button);
+        }
+        return [RACSignal hsy_sendCompletedSignal];
+    }];
+}
+
++ (instancetype)hsy_buttonWithEnabledAction:(RACSignal *(^)(UIButton *button))action
+{
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [[[button rac_signalForControlEvents:UIControlEventTouchUpInside] deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(__kindof UIControl * _Nullable x) {
         if (action) {
-            action((UIButton *)x);
+            x.userInteractionEnabled = NO;
+            [[action((UIButton *)x) deliverOn:[RACScheduler mainThreadScheduler]] subscribeCompleted:^{
+                x.userInteractionEnabled = YES;
+            }];
         }
     }];
-    
     return button;
 }
 

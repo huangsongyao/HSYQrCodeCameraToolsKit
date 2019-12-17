@@ -42,7 +42,7 @@
     return [RACSignal hsy_signalSubscriber:didSubscriber afterDelays:0.0f];
 }
 
-+ (RACSignal *)hsy_signalSubscriber:(void(^)(id<RACSubscriber> subscriber))didSubscriber afterDelays:(NSTimeInterval)delays
++ (RACSignal *)hsy_signalSubscriber:(void(^)(id<RACSubscriber> subscriber))didSubscriber afterDelays:(NSTimeInterval)delays 
 {
     return [RACSignal createSignal:^RACDisposable * _Nullable(id<RACSubscriber>  _Nonnull subscriber) {
         if (didSubscriber) {
@@ -70,6 +70,18 @@
 - (RACDisposable *)hsy_performCompletedSignal
 {
     return [[self deliverOn:[RACScheduler mainThreadScheduler]] subscribeCompleted:^{}];
+}
+
++ (RACSignal *)hsy_sendCompletedSignal
+{
+    return [RACSignal hsy_sendCompletedSignal:0.0f];
+}
+
++ (RACSignal *)hsy_sendCompletedSignal:(NSTimeInterval)delays
+{
+    return [RACSignal hsy_signalSubscriber:^(id<RACSubscriber>  _Nonnull subscriber) {
+        [subscriber sendCompleted];
+    } afterDelays:delays];
 }
 
 + (void)hsy_performSendSignal:(id<RACSubscriber>)subscriber forObject:(id)signal
