@@ -23,26 +23,28 @@
     [super viewDidLoad];
     UIButton *button = [UIButton hsy_buttonWithAction:^(UIButton * _Nonnull  button) {
         @weakify(self);
-        [HSYQrCameraTools hsy_presentQrCodeCustomCamera:^(HSYQrCodeCameraViewController * _Nonnull viewController, NSString * _Nonnull metadataValue) { 
+//        [HSYQrCameraTools hsy_presentQrCodeCustomCamera:^(HSYQrCodeCameraViewController * _Nonnull viewController, NSString * _Nonnull metadataValue) { 
+//            NSLog(@"x.metadata => %@", metadataValue);
+//            NSLog(@"completed");
+//            [button hsy_setTitle:metadataValue];
+//        } discernQrCodeImage:^RACSignal<RACTuple *> * _Nonnull(NSString * _Nonnull qrString, BOOL isDiscernSuccess) {
+//            BOOL stopCamera = YES;
+//            BOOL backLast = YES;
+//            if (!isDiscernSuccess) {
+//                stopCamera = !stopCamera;
+//                backLast = !backLast;
+//                @strongify(self);
+//                [[[UIAlertController hsy_showAlertController:self.presentedViewController title:@"failure" message:qrString alertActionTitles:@[@"YES"]] deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(UIAlertAction * _Nullable x) {}];
+//            }
+//            return [RACSignal hsy_sendTupleSignal:RACTuplePack(@(stopCamera), @(backLast))];
+//        } forCameraTitle:@"test"];
+        [HSYQrCameraTools hsy_pushQrCodeCustomCamera:^(HSYQrCodeCameraViewController * _Nonnull viewController, NSString * _Nonnull metadataValue) { 
             NSLog(@"x.metadata => %@", metadataValue);
             NSLog(@"completed");
             [button hsy_setTitle:metadataValue];
         } discernQrCodeImage:^RACSignal<RACTuple *> * _Nonnull(NSString * _Nonnull qrString, BOOL isDiscernSuccess) {
-            BOOL stopCamera = YES;
-            BOOL backLast = YES;
-            if (!isDiscernSuccess) {
-                stopCamera = !stopCamera;
-                backLast = !backLast;
-                @strongify(self);
-                [[[UIAlertController hsy_showAlertController:self.presentedViewController title:@"failure" message:qrString alertActionTitles:@[@"YES"]] deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(UIAlertAction * _Nullable x) {}];
-            }
-            return [RACSignal hsy_sendTupleSignal:RACTuplePack(@(stopCamera), @(backLast))];
-        } forCameraTitle:@"test"];
-//        [HSYQrCameraTools hsy_pushQrCodeCustomCamera:^(HSYQrCodeCameraViewController * _Nonnull viewController, NSString * _Nonnull metadataValue) {
-//            NSLog(@"x.metadata => %@", metadataValue);
-//            NSLog(@"completed");
-//            [button hsy_setTitle:metadataValue];
-//        }];
+            return [RACSignal hsy_sendTupleSignal:RACTuplePack(@(YES), @(YES))];
+        }];
     }];
     [button hsy_setTitle:@"clicked me"];
     button.backgroundColor = [UIColor.greenColor colorWithAlphaComponent:0.5];

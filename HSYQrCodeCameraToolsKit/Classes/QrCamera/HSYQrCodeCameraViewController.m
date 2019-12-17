@@ -53,12 +53,19 @@ NSString *const kHSYQrCodeCameraAnimationForKey  = @"HSYQrCodeCameraAnimationFor
     self.boxCGRect = (CGRect){self.class.hsy_boxCGPoints, boxSize, boxSize};
     //初始化ui
     [self addQrCameraUI];
+    //状态切换的监听
+    @weakify(self);
+    [[[[[NSNotificationCenter defaultCenter] rac_addObserverForName:UIApplicationDidBecomeActiveNotification object:nil] takeUntil:self.rac_willDeallocSignal] deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(NSNotification * _Nullable x) {
+        @strongify(self);
+        NSLog(@"xxxx=>%@, self=>%@", x, self);
+        [self hsy_start];
+    }];
     // Do any additional setup after loading the view.
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    if (UIViewController.hsy_haveAuthoritys) {
+    if (self.haveAuthoritys) {
         [self hsy_startRunning];
     } else {
         [[[UIAlertController hsy_showAlertController:self title:@"您尚未授权摄像头的使用权限" message:@"由于您当前尚未授权您的设备的摄像头使用权限，需要您在系统的 “设置-隐私-相机” 中授权此应用访问您设备的摄像头权限" alertActionTitles:@[@"取消", @"去授权"]] deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(UIAlertAction * _Nullable x) {
@@ -98,17 +105,24 @@ NSString *const kHSYQrCodeCameraAnimationForKey  = @"HSYQrCodeCameraAnimationFor
 
 #pragma mark - Lazy
 
+- (BOOL)haveAuthoritys
+{
+    return UIViewController.hsy_haveAuthoritys;
+}
+
 - (AVCaptureSession *)qrCameraSession
 {
     if (!_qrCameraSession) {
-        _qrCameraSession = [[AVCaptureSession alloc] init];
-        [_qrCameraSession setSessionPreset:AVCaptureSessionPresetHigh];          //高质量采集率
-        [_qrCameraSession addInput:self.qrCameraInput];
-        [_qrCameraSession addOutput:self.qrCameraOutput];
-        //完成输入流和输出流的对接后,开始设置输出流的支持类型，扫码支持的编码格式(如下设置条形码和二维码兼容)
-        self.qrCameraOutput.metadataObjectTypes = @[AVMetadataObjectTypeQRCode, AVMetadataObjectTypeEAN13Code, AVMetadataObjectTypeEAN8Code, AVMetadataObjectTypeCode128Code];
-        //输入流和输出流对接后，设置对应的视图渲染层，用以捕获摄像头的数据信息
-        [self.view.layer insertSublayer:self.qrCameraPreviewLayer atIndex:0];
+        if (self.haveAuthoritys) {
+            _qrCameraSession = [[AVCaptureSession alloc] init];
+            [_qrCameraSession setSessionPreset:AVCaptureSessionPresetHigh];          //高质量采集率
+            [_qrCameraSession addInput:self.qrCameraInput];
+            [_qrCameraSession addOutput:self.qrCameraOutput];
+            //完成输入流和输出流的对接后,开始设置输出流的支持类型，扫码支持的编码格式(如下设置条形码和二维码兼容)
+            self.qrCameraOutput.metadataObjectTypes = @[AVMetadataObjectTypeQRCode, AVMetadataObjectTypeEAN13Code, AVMetadataObjectTypeEAN8Code, AVMetadataObjectTypeCode128Code];
+            //输入流和输出流对接后，设置对应的视图渲染层，用以捕获摄像头的数据信息
+            [self.view.layer insertSublayer:self.qrCameraPreviewLayer atIndex:0];
+        }
     }
     return _qrCameraSession;
 }
@@ -116,7 +130,9 @@ NSString *const kHSYQrCodeCameraAnimationForKey  = @"HSYQrCodeCameraAnimationFor
 - (AVCaptureDevice *)qrCameraDevice
 {
     if (!_qrCameraDevice) {
-        _qrCameraDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+        if (self.haveAuthoritys) {
+            _qrCameraDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+        }
     }
     return _qrCameraDevice;
 }
@@ -124,11 +140,13 @@ NSString *const kHSYQrCodeCameraAnimationForKey  = @"HSYQrCodeCameraAnimationFor
 - (AVCaptureDeviceInput *)qrCameraInput
 {
     if (!_qrCameraInput) {
-        NSError *error = nil;
-        _qrCameraInput = [AVCaptureDeviceInput deviceInputWithDevice:self.qrCameraDevice error:&error];
-        if (error) {
-            NSLog(@"QRCode Camera Error!------AVCaptureDeviceInput Error:%@", error);
-            return nil;
+        if (self.haveAuthoritys) {
+            NSError *error = nil;
+            _qrCameraInput = [AVCaptureDeviceInput deviceInputWithDevice:self.qrCameraDevice error:&error];
+            if (error) {
+                NSLog(@"QRCode Camera Error!------AVCaptureDeviceInput Error:%@", error);
+                return nil;
+            }
         }
     }
     return _qrCameraInput;
@@ -137,12 +155,14 @@ NSString *const kHSYQrCodeCameraAnimationForKey  = @"HSYQrCodeCameraAnimationFor
 - (AVCaptureMetadataOutput *)qrCameraOutput
 {
     if (!_qrCameraOutput) {
-        _qrCameraOutput = [[AVCaptureMetadataOutput alloc] init];
-        //扫描范围
-        CGRect rectOfInterest = [self hsy_qrCodeScaning:(CGRect){self.class.hsy_boxCGPoints.x, (self.class.hsy_boxCGPoints.y + self.hsy_rectOfInterestOffsets), self.boxCGRect.size}];
-        _qrCameraOutput.rectOfInterest = rectOfInterest;
-        //设置代理 在主线程里刷新
-        [_qrCameraOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
+        if (self.haveAuthoritys) {
+            _qrCameraOutput = [[AVCaptureMetadataOutput alloc] init];
+            //扫描范围
+            CGRect rectOfInterest = [self hsy_qrCodeScaning:(CGRect){self.class.hsy_boxCGPoints.x, (self.class.hsy_boxCGPoints.y + self.hsy_rectOfInterestOffsets), self.boxCGRect.size}];
+            _qrCameraOutput.rectOfInterest = rectOfInterest;
+            //设置代理 在主线程里刷新
+            [_qrCameraOutput setMetadataObjectsDelegate:self queue:dispatch_get_main_queue()];
+        }
     }
     return _qrCameraOutput;
 }
@@ -150,9 +170,11 @@ NSString *const kHSYQrCodeCameraAnimationForKey  = @"HSYQrCodeCameraAnimationFor
 - (AVCaptureVideoPreviewLayer *)qrCameraPreviewLayer
 {
     if (!_qrCameraPreviewLayer) {
-        _qrCameraPreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.qrCameraSession];
-        _qrCameraPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
-        _qrCameraPreviewLayer.frame = self.view.layer.bounds;
+        if (self.haveAuthoritys) {
+            _qrCameraPreviewLayer = [AVCaptureVideoPreviewLayer layerWithSession:self.qrCameraSession];
+            _qrCameraPreviewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
+            _qrCameraPreviewLayer.frame = self.view.layer.bounds;
+        }
     }
     return _qrCameraPreviewLayer;
 }

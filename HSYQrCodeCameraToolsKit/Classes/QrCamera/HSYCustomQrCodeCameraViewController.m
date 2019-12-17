@@ -43,16 +43,19 @@
 - (UIButton *)lightButton
 {
     if (!_lightButton) {
-        NSDictionary *dictionary = @{@(YES) : @{@"打开手电筒" : @"open_light_icon"}, @(NO) : @{@"关闭手电筒" : @"close_light_icon"}};
+        NSDictionary *dictionary = @{@(YES) : @{HSYLOCALIZED(@"打开手电筒") : @"open_light_icon"}, @(NO) : @{HSYLOCALIZED(@"关闭手电筒") : @"close_light_icon"}};
         @weakify(self);
         _lightButton = [UIButton hsy_buttonWithAction:^(UIButton * _Nonnull button) {
             @strongify(self);
             if ([self.hsy_captureDevice hasTorch]) {
                 [self hsy_cameraDeviceConfiguration:button.selected];
             } else {
-                [[[UIAlertController hsy_showAlertController:self title:@"您的手机可能没有闪光灯设备" message:@"您的手机可能没有闪光灯设备，暂时无法提供手电筒功能，请检查后再试" alertActionTitles:@[@"知道了"]] deliverOn:[RACScheduler mainThreadScheduler ]] subscribeNext:^(UIAlertAction * _Nullable x) {}];
+                NSString *title = HSYLOCALIZED(@"您的手机可能没有闪光灯设备或者您尚未授权本应用访问您的闪光灯设备");
+                [[[UIAlertController hsy_showAlertController:self title:title message:[NSString stringWithFormat:@"%@，暂时无法提供手电筒功能，请检查后再试", title] alertActionTitles:@[HSYLOCALIZED(@"知道了")]] deliverOn:[RACScheduler mainThreadScheduler ]] subscribeNext:^(UIAlertAction * _Nullable x) {}];
             }
-            button.selected = !button.selected;
+            if (self.haveAuthoritys) {
+                button.selected = !button.selected;
+            }
         }];
         [_lightButton setImage:[NSBundle hsy_imageForBundle:[dictionary[@(NO)] allValues].firstObject] forState:UIControlStateNormal];
         [_lightButton setImage:[NSBundle hsy_imageForBundle:[dictionary[@(YES)] allValues].firstObject] forState:UIControlStateSelected];

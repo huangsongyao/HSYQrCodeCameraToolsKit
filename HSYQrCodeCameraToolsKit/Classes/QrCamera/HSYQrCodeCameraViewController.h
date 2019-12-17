@@ -32,6 +32,9 @@ typedef RACSignal<RACTuple *> *_Nonnull(^HSYQrCodeCameraDidOutputMetadataBlock)(
 
 @interface HSYQrCodeCameraViewController : UIViewController
 
+//授权状态
+@property (nonatomic, assign, readonly) BOOL haveAuthoritys;
+//委托回调
 @property (nonatomic, weak) id<HSYQrCodeCameraViewControllerDelegate>qrDelegate;
 
 #pragma mark - Runing

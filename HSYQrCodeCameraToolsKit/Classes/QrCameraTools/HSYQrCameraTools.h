@@ -19,15 +19,19 @@ typedef RACSignal<RACTuple *> *_Nonnull(^HSYQrCameraToolsDiscernQrCodeImageBlock
  push格式的快速方法【不带有手电筒，不带有“相册”按钮的原始二维码相机】
 
  @param metadataBlock 二维码相机扫描结果后续操作的block回调事件
+ @param discern 识别图片二维码后的结果回调的block事件
  */
-+ (void)hsy_pushQrCodeCamera:(HSYQrCameraToolsDidOutputMetadataBlock)metadataBlock;
++ (void)hsy_pushQrCodeCamera:(HSYQrCameraToolsDidOutputMetadataBlock)metadataBlock
+          discernQrCodeImage:(HSYQrCameraToolsDiscernQrCodeImageBlock)discern;
 
 /**
  push格式的快速方法【自带有手电筒，自带有“相册”按钮的原始二维码相机】
 
  @param metadataBlock 二维码相机扫描结果后续操作的block回调事件
+ @param discern 识别图片二维码后的结果回调的block事件
  */
-+ (void)hsy_pushQrCodeCustomCamera:(HSYQrCameraToolsDidOutputMetadataBlock)metadataBlock;
++ (void)hsy_pushQrCodeCustomCamera:(HSYQrCameraToolsDidOutputMetadataBlock)metadataBlock
+                discernQrCodeImage:(HSYQrCameraToolsDiscernQrCodeImageBlock)discern;
 
 /**
  present格式的快速方法【不带有手电筒，不带有“相册”按钮的原始二维码相机】
